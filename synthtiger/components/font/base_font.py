@@ -130,14 +130,24 @@ class BaseFont(Component):
         text = text.replace("\\", "＼")
 
         ids = [self._ids[key].get(char) for char in text]
+        print("self._ids")
+        print(self._ids)
         if None in ids:
             raise RuntimeError(
                 f"There is no font that can render text '{text}': {self.paths[key]}"
             )
 
+
         table = self._tables[key][..., ids]
+        print("table")
+        print(table)
+
         counts = np.sum(table, axis=1)
         idxes = np.argwhere(counts == len(text)).flatten()
         idx = idxes[np.random.randint(len(idxes))]
+        print("self._paths")
+        print(self._paths)
         path = self._paths[key][idx]
+        print("path")
+        print(path)
         return path
