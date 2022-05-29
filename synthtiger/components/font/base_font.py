@@ -21,6 +21,7 @@ class BaseFont(Component):
         size=(16, 48),
         bold=0,
         vertical=False,
+        language="en"
     ):
         super().__init__()
         self.paths = paths
@@ -28,6 +29,7 @@ class BaseFont(Component):
         self.size = size
         self.bold = bold
         self.vertical = vertical
+        self.language = language
         self._paths = []
         self._counts = []
         self._probs = np.array(self.weights) / sum(self.weights)
@@ -48,7 +50,10 @@ class BaseFont(Component):
             )
 
         text = meta.get("text")
-        path = meta.get("path", self._sample_font(text))
+        if self.language == "cn": # 中文
+            path = meta.get("path", self._sample_font(text))
+        else:
+            path = meta.get("path", self._sample_font_base(text))
         size = meta.get("size", np.random.randint(self.size[0], self.size[1] + 1))
         bold = meta.get("bold", np.random.rand() < self.bold)
         vertical = meta.get("vertical", self.vertical)
@@ -129,25 +134,35 @@ class BaseFont(Component):
         # https://en.wikipedia.org/wiki/Backslash
         text = text.replace("\\", "＼")
 
+        idx = np.random.randint(len(self._paths[key]))
+        path = self._paths[key][idx]
+        # print("path")
+        # print(path)
+        return path
+
+
+    def _sample_font_base(self, text=None):
+        key = np.random.choice(len(self.paths), p=self._probs)
+        if self._counts[key] == 0:
+            raise RuntimeError(f"There is no font: {self.paths[key]}")
+
+        if text is None:
+            idx = np.random.randint(len(self._paths[key]))
+            path = self._paths[key][idx]
+            return path
+
+        # https://en.wikipedia.org/wiki/Backslash
+        text = text.replace("\\", "＼")
+
         ids = [self._ids[key].get(char) for char in text]
-        print("self._ids")
-        print(self._ids)
         if None in ids:
             raise RuntimeError(
                 f"There is no font that can render text '{text}': {self.paths[key]}"
             )
 
-
         table = self._tables[key][..., ids]
-        print("table")
-        print(table)
-
         counts = np.sum(table, axis=1)
         idxes = np.argwhere(counts == len(text)).flatten()
         idx = idxes[np.random.randint(len(idxes))]
-        print("self._paths")
-        print(self._paths)
         path = self._paths[key][idx]
-        print("path")
-        print(path)
         return path

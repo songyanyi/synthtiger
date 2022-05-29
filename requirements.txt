@@ -1,13 +1,15 @@
 arabic-reshaper
 blend-modes
 fonttools
-imgaug
-numpy
-opencv-python
-pillow>=8.2.0
+imgaug==0.4.0
+numpy==1.19.5
+# opencv-python
+pillow==8.3.2
 pygame
 python-bidi
 pytweening
 pyyaml
 regex
-scipy
+scipy==1.5.4
+imageio==2.10.2
+faker
