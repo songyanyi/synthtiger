@@ -1,3 +1,4 @@
+export PYTHONPATH=$PYTHONPATH:/opt/synthtiger
 # gen chinese
 
 cd /opt/synthtiger
@@ -21,3 +22,4 @@ python synthtiger/main.py -o results/en -c 10000 -w 30 -v examples/english/templ
 
 # 复制到宿主机
 docker cp -a cf8056fa736a:/opt/synthtiger/results F:\Project\docpartner\core\textocr\dataset\synthtiger
+docker cp -a cf8056fa736a:/opt/synthtiger/results/en/images F:\Project\docpartner\core\textocr\dataset\synthtiger\en\images

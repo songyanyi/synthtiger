@@ -176,7 +176,7 @@ class SynthTiger(templates.Template):
     def init_save(self, root):
         os.makedirs(root, exist_ok=True)
         gt_path = os.path.join(root, "gt.txt")
-        self.gt_file = open(gt_path, "w", encoding="utf-8")
+        self.gt_file = open(gt_path, "a", encoding="utf-8")
 
     def save(self, root, data, idx):
         image = data["image"]
