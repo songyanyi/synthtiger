@@ -1,6 +1,7 @@
-vertical: false
+vertical: true
 quality: [50, 95]
 visibility_check: true
+language: en
 
 midground: 0.25
 midground_offset:
@@ -11,24 +12,24 @@ corpus:
   weights: [1, 0]
   args:
     # length augmentable corpus
-    - paths: [resources/corpus/chinesecorpus.txt]
-      weights: [1]
+    - paths: [resources/corpus/mjsynth.txt, resources/corpus/synthtext.txt]
+      weights: [1, 1]
       min_length: 1
-      max_length: 25
-      # textcase: [lower, upper, capitalize]
+      max_length: 15
+      textcase: [lower, upper, capitalize]
       augmentation: 0.1
-      augmentation_length: [1, 25]
+      augmentation_length: [1, 15]
     # char augmentable corpus
     - paths: []
       weights: []
       min_length: 1
-      max_length: 25
+      max_length: 15
       textcase: [lower, upper, capitalize]
       augmentation: 0
       augmentation_charset: resources/charset/alphanum_special.txt
 
 font:
-  paths: [resources/font/cn]
+  paths: [resources/font]
   weights: [1]
   size: [40, 80]
   bold: 0.5
@@ -77,11 +78,11 @@ layout:
   weights: [4, 1]
   args:
     # flow layout
-    - space: [-2, 5]
+    - space: [0, 0]
       line_align: [middle]
     # curve layout
-    - curve: [20, 40]
-      space: [-2, 5]
+    - curve: [10, 20]
+      space: [0, 0]
       convex: 0.5
       upward: 0.5
 
@@ -118,28 +119,28 @@ transform:
         aligns: [[0, 0], [0, 0]]
       # trapezoidate x
       - weights: [1, 0, 1, 0]
-        percent: [0.75, 1]
+        percent: [0.5, 1]
         align: [-1, 1]
       # trapezoidate y
       - weights: [0, 1, 0, 1]
-        percent: [0.5, 1]
+        percent: [0.875, 1]
         align: [-1, 1]
       # skew x
       - weights: [1, 0]
-        angle: [0, 30]
+        angle: [0, 5]
         ccw: 0.5
       # skew y
       - weights: [0, 1]
-        angle: [0, 10]
+        angle: [0, 30]
         ccw: 0.5
       # rotate
-      - angle: [0, 10]
+      - angle: [0, 5]
         ccw: 0.5
 
 pad:
   prob: 1
   args:
-    pxs: [[0, 10], [0, 10], [0, 10], [0, 10]]
+    pxs: [[0, 5], [0, 5], [0, 5], [0, 5]]
 
 postprocess:
   args:

@@ -26,6 +26,49 @@ BLEND_MODES = [
     "darken_only",
     "lighten_only",
 ]
+# 随机构建id/name
+def random_str_as_id_and_name():
+    """
+    随机生成字符串，作为id和name
+    """
+    # random.choices() # py3.6才有
+
+    _aaa = [
+        '0','1','2','3','4','5','6','7','8','9',
+        'a','b','c','d','e','f','g','h','i','j','k',
+        'l','m','n','o','p','q','r','s','t','u','v','w','x','y','z',
+        'A',
+        'B',
+        'C',
+        'D',
+        'E',
+        'F',
+        'G',
+        'H',
+        'I',
+        'J',
+        'K',
+        'L',
+        'M',
+        'N',
+        'O',
+        'P',
+        'Q',
+        'R',
+        'S',
+        'T',
+        'U',
+        'V',
+        'W',
+        'X',
+        'Y',
+        'Z',
+    ]
+     
+    _bbb = np.random.choice(_aaa, size=15, replace=True)
+    ida = "".join(_bbb.tolist())
+    return ida
+
 
 
 class SynthTiger(templates.Template):
@@ -33,6 +76,7 @@ class SynthTiger(templates.Template):
         if config is None:
             config = {}
 
+        self.language = config.get('language', "en")
         self.vertical = config.get("vertical", False)
         self.quality = config.get("quality", [95, 95])
         self.visibility_check = config.get("visibility_check", False)
@@ -48,7 +92,7 @@ class SynthTiger(templates.Template):
             ],
             **config.get("corpus", {}),
         )
-        self.font = components.BaseFont(**config.get("font", {}))
+        self.font = components.BaseFont(**config.get("font", {}),language=self.language)
         self.texture = components.Switch(
             components.BaseTexture(), **config.get("texture", {})
         )
@@ -132,15 +176,21 @@ class SynthTiger(templates.Template):
     def init_save(self, root):
         os.makedirs(root, exist_ok=True)
         gt_path = os.path.join(root, "gt.txt")
-        self.gt_file = open(gt_path, "w", encoding="utf-8")
+        self.gt_file = open(gt_path, "a", encoding="utf-8")
 
     def save(self, root, data, idx):
         image = data["image"]
         label = data["label"]
         quality = data["quality"]
 
-        shard = str(idx // 10000)
-        image_key = os.path.join("images", shard, f"{idx}.jpg")
+        if self.vertical:
+            v = "vertical_images"
+        else:
+            v = "images"
+
+        # shard = str(idx // 10000)
+        fname = random_str_as_id_and_name()
+        image_key = os.path.join(v,  f"{fname}.jpg")
         image_path = os.path.join(root, image_key)
 
         os.makedirs(os.path.dirname(image_path), exist_ok=True)

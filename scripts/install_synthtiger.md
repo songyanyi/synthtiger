@@ -1,39 +1,45 @@
 # docker
 docker pull fnndsc/ubuntu-python3:18.04
 
+apt install git -y
 
-# 
-activate textgen
-cd /d F:\Project\docpartner\core\textocr\datahelper\datagen\synthtiger
+cd /opt
 
-下载 whl opencv and pillow
+git clone https://github.com/songyanyi/synthtiger.git
+
+下载 whl opencv
 https://mirrors.tuna.tsinghua.edu.cn/pypi/web/simple/opencv-python/
+
+libraqm 安装
+set -euxo pipefail
+apt install -y \
+    libtiff5-dev \
+    libjpeg8-dev \
+    libopenjp2-7-dev \
+    zlib1g-dev \
+    libfreetype6-dev \
+    liblcms2-dev \
+    libwebp-dev \
+    tcl8.6-dev \
+    tk8.6-dev \
+    python3-tk \
+    libharfbuzz-dev \
+    libfribidi-dev \
+    libxcb1-dev
 
 pip install opencv_python..
 
 
+pip install -r requirements.txt -i https://pypi.tuna.tsinghua.edu.cn/simple/
 
-python -m pip install -r requirements.txt -i https://pypi.tuna.tsinghua.edu.cn/simple/
-
-
-libraqm 安装
 
 
 synthtiger 添加到搜索路径
 export PYTHONPATH=$PYTHONPATH:/opt/synthtiger
 
 
-运行corpus.py 在 resource corpus 中生成 chinesecorpus.txt
+运行 script_corpus_gen.py 在 resource/corpus 中生成 chinesecorpus.txt
 
-trdg中的中文字体移动到 font 
-
-
-# 
-activate textgen
-cd /d F:\Project\docpartner\core\textocr\datahelper\datagen\synthtiger
-
-python synthtiger/main.py -o results/cn -c 100 -w 10 -v examples/my/template.py SynthTiger examples/my/config_horizontal.yaml
-
-python synthtiger/main.py -o results/en -c 100 -w 10 -v examples/synthtiger/template.py SynthTiger examples/synthtiger/config_horizontal.yaml
+trdg 中的中文字体移动到 font 
 
 

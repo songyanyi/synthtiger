@@ -71,6 +71,9 @@ def _generate(template, verbose):
             data = template.generate()
         except:
             if verbose:
-                print(f"{traceback.format_exc()}")
+                try:
+                    print(f"{traceback.format_exc()}")
+                except:
+                    pass
             continue
         return data

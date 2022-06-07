@@ -8,7 +8,6 @@ https://blog.csdn.net/weixin_43499626/article/details/99670187
 activate textgen
 cd /d F:\Project\docpartner\core\textocr\datahelper\datagen\synthtiger\scripts
 python lang_corpus_gen.py
-
 # 多语言 https://faker.readthedocs.io/en/master/locales.html
 zh_CN
 
@@ -94,7 +93,6 @@ synthtigerPath = os.path.dirname(nowPath)
 corpusPath = os.path.join(synthtigerPath,"resources","corpus","chinesecorpus.txt")
 with open(corpusPath,"a",encoding="utf-8") as f:
     f.writelines(strList)
-
 
 
 

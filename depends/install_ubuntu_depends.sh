@@ -3,7 +3,7 @@ set -euxo pipefail
 
 # Pillow
 
-sudo apt install -y \
+apt install -y \
     libtiff5-dev \
     libjpeg8-dev \
     libopenjp2-7-dev \
