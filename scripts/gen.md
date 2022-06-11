@@ -1,3 +1,15 @@
+# 
+先用 lang_corpus_gen.py 生成某种语言的语料。（如果需要，添加 dicts，copy自trdg）
+
+再在 resources / font 中添加该语言的字体。copy 自 trdg
+
+# 打开 docker
+
+# 打开 容器
+
+# 打开 vscode ssh
+# 
+
 export PYTHONPATH=$PYTHONPATH:/opt/synthtiger
 # gen chinese
 
