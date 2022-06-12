@@ -50,7 +50,7 @@ class BaseFont(Component):
             )
 
         text = meta.get("text")
-        if self.language == "cn": # 中文
+        if self.language == "cn" or self.language == "ar" or self.language == "bn" or self.language == "hi" or self.language == "ja" or self.language == "ko" : # 中文
             path = meta.get("path", self._sample_font(text))
         else:
             path = meta.get("path", self._sample_font_base(text))
